@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} {{ show.title }} {% endblock title %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <h1 class="text-2xl font-bold mb-4">{{ show.title }}</h1>
+        <p class="text-gray-700">{{ show.content }}</p>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+<div class="main p-4 items-center justify-center">
+    <table class="border-collapse">
+        <thead>
+            <tr class="bg-blue-100">
+                <th class="border-2 px-4 py-2">Index</th>
+                <th class="border-2 px-4 py-2">Title</th>
+                <th class="border-2 px-96 py-2">Content</th>
+                <th class="border-2 px-4 py-2">Date</th>
+                <th class="border-2 px-4 py-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for note in notes%}
+            <tr>
+                <td class="border-4 px-4 py-2">{{forloop.counter}}</td>
+                <td class="border-4 px-4 py-2">{{note.title}}</td>
+                <td class="border-4 px-4 py-2">{{note.content | striptags | truncatechars:100 }}</td>
+                <td class="border-4 px-4 py-2">{{note.create_date}}</td>
+                <td class="border-4 px-4 py-2">
+                    <div class="justify-between text-center">
+                        <form action="{% url 'show' note.id %}" method="get" style="display: inline;">
+                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold px-4 py-2 rounded my-1">Open</button>
+                        </form>
+                        <form action="{% url 'update_note' note.id %}" method="get" style="display: inline;">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-1">Update</button>
+                        </form>
+                        <form action="{% url 'delete_note' note.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold px-4 py-2 rounded">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

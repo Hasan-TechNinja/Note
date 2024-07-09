@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body class='bg-blue-200'>
+    {% comment %} header start here  {% endcomment %}
+    <nav class="bg-blue-100 py-5">
+        <ul class="flex justify-center text-center font-bold space-x-8">
+            <li class="hover:cursor-pointer hover:underline"><a href="{% url "home" %}">Home</a></li>
+            <li class="hover:cursor-pointer hover:underline"><a href="{% url "admin:index" %}">Admin</a></li>
+            <li class="hover:cursor-pointer hover:underline"><a href="{% url "create" %}">New Note</a></li>
+        </ul>
+    </nav>
+    {% comment %} header end here  {% endcomment %}
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>
