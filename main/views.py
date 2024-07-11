@@ -3,6 +3,9 @@ from django.views import View
 from .models import Notes
 from datetime import date
 from .forms import NoteForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 
 def home(request):
     notes = Notes.objects.all()
@@ -40,6 +43,7 @@ def update_note(request, note_id):
     if request.method == 'POST':
         form = NoteForm(request.POST, instance=note)
         if form.is_valid():
+            note.create_date = date.today()
             form.save()
             return redirect('home')
     else:
@@ -49,3 +53,34 @@ def update_note(request, note_id):
         'note': note
     }
     return render(request, 'update_note.html', context)
+
+def Registration(request):
+    if request.method == "POST":
+        fm = UserCreationForm(request.POST)
+        if fm.is_valid:
+            fm.save()
+            return redirect('login')
+    else:
+        fm = UserCreationForm
+    context = {
+        "form":fm,
+    }
+    return render(request, 'registration.html', context)
+
+def LoginView(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data = request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = AuthenticationForm
+    return render(request, "login.html", {'form':form})
+
+def Logout(request):
+    logout(request)
+    return redirect('login')

@@ -8,4 +8,7 @@ urlpatterns = [
     path('delete/<int:note_id>/', views.delete_note, name='delete_note'),
     path('update/<int:note_id>/', views.update_note, name='update_note'),
     path('show/<int:note_id>/', views.show_note, name='show'),
+    path('registration/', views.Registration, name="registration"),
+    path('login/', views.LoginView, name='login'),
+    path('logout/', views.Logout, name="logout"),
 ]

@@ -12,11 +12,18 @@
     {% comment %} header start here  {% endcomment %}
     <nav class="bg-blue-100 py-5">
         <ul class="flex justify-center text-center font-bold space-x-8">
-            <li class="hover:cursor-pointer hover:underline"><a href="{% url "home" %}">Home</a></li>
-            <li class="hover:cursor-pointer hover:underline"><a href="{% url "admin:index" %}">Admin</a></li>
-            <li class="hover:cursor-pointer hover:underline"><a href="{% url "create" %}">New Note</a></li>
+            <li class="hover:cursor-pointer hover:underline"><a href="{% url 'home' %}">Home</a></li>
+            <li class="hover:cursor-pointer hover:underline"><a href="{% url 'admin:index' %}">Admin</a></li>
+            <li class="hover:cursor-pointer hover:underline"><a href="{% url 'create' %}">New Note</a></li>
+            {% if user.is_authenticated %}
+                <li class="hover:cursor-pointer hover:underline"><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li class="hover:cursor-pointer hover:underline"><a href="{% url 'login' %}">Login</a></li>
+                <li class="hover:cursor-pointer hover:underline"><a href="{% url 'registration' %}">Registration</a></li>
+            {% endif %}
         </ul>
     </nav>
+    
     {% comment %} header end here  {% endcomment %}
     {% block content %}
     {% endblock content %}
