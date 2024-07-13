@@ -4,6 +4,7 @@ from .models import Notes
 from datetime import date
 from .forms import NoteForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -14,6 +15,7 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
+@login_required
 def create(request):
     if request.method == "POST":
         form = NoteForm(request.POST)
@@ -26,11 +28,13 @@ def create(request):
         form = NoteForm()
     return render(request, 'create.html', {'form': form})
 
+@login_required
 def delete_note(request, note_id):
     note = get_object_or_404(Notes, id=note_id)
     note.delete()
     return redirect('home')
 
+@login_required
 def show_note(request, note_id):
     show = get_object_or_404(Notes, id=note_id)
     context = {
@@ -38,6 +42,7 @@ def show_note(request, note_id):
     }
     return render(request, 'show_note.html', context)
 
+@login_required
 def update_note(request, note_id):
     note = get_object_or_404(Notes, id=note_id)
     if request.method == 'POST':
