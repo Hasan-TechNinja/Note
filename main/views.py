@@ -62,11 +62,11 @@ def update_note(request, note_id):
 def Registration(request):
     if request.method == "POST":
         fm = UserCreationForm(request.POST)
-        if fm.is_valid:
+        if fm.is_valid():
             fm.save()
             return redirect('login')
     else:
-        fm = UserCreationForm
+        fm = UserCreationForm()
     context = {
         "form":fm,
     }
@@ -74,17 +74,18 @@ def Registration(request):
 
 def LoginView(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data = request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                next_url = request.POST.get('next', 'home')
+                return redirect(next_url)
     else:
-        form = AuthenticationForm
-    return render(request, "login.html", {'form':form})
+        form = AuthenticationForm()
+    return render(request, "login.html", {'form': form, 'next': request.GET.get('next', '')})
 
 def Logout(request):
     logout(request)
