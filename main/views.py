@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
-from .models import Notes
+from .models import Notess
 from datetime import date
 from .forms import NoteForm
 from django.contrib.auth.forms import UserCreationForm
@@ -8,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
+@login_required
 def home(request):
-    notes = Notes.objects.all()
+    notes = Notess.objects.filter(user=request.user)
     context = {
         "notes": notes
     }
@@ -21,6 +21,7 @@ def create(request):
         form = NoteForm(request.POST)
         if form.is_valid():
             note = form.save(commit=False)
+            note.user = request.user
             note.create_date = date.today()
             note.save()
             return redirect('home')
@@ -30,21 +31,21 @@ def create(request):
 
 @login_required
 def delete_note(request, note_id):
-    note = get_object_or_404(Notes, id=note_id)
+    note = get_object_or_404(Notess, id=note_id, user=request.user)
     note.delete()
     return redirect('home')
 
 @login_required
 def show_note(request, note_id):
-    show = get_object_or_404(Notes, id=note_id)
+    show = get_object_or_404(Notess, id=note_id, user=request.user)
     context = {
-        "show":show
+        "show": show
     }
     return render(request, 'show_note.html', context)
 
 @login_required
 def update_note(request, note_id):
-    note = get_object_or_404(Notes, id=note_id)
+    note = get_object_or_404(Notess, id=note_id, user=request.user)
     if request.method == 'POST':
         form = NoteForm(request.POST, instance=note)
         if form.is_valid():
@@ -68,7 +69,7 @@ def Registration(request):
     else:
         fm = UserCreationForm()
     context = {
-        "form":fm,
+        "form": fm,
     }
     return render(request, 'registration.html', context)
 

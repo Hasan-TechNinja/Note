@@ -1,10 +1,10 @@
 # your_app/forms.py
 from django import forms
-from .models import Notes
+from .models import Notess
 
 class NoteForm(forms.ModelForm):
     class Meta:
-        model = Notes
+        model = Notess
         fields = ['title', 'content']
         widgets = {
             'title': forms.TextInput(attrs={
