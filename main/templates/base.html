@@ -16,7 +16,10 @@
             <li class="hover:cursor-pointer hover:underline"><a href="{% url 'admin:index' %}">Admin</a></li>
             <li class="hover:cursor-pointer hover:underline"><a href="{% url 'create' %}">New Note</a></li>
             {% if user.is_authenticated %}
-                <li class="hover:cursor-pointer hover:underline"><a href="{% url 'logout' %}">Logout</a></li>
+                <li class="hover:cursor-pointer hover:underline"><a href="#">Profile</a></li>
+                <li class="hover:cursor-pointer hover:underline"><a href="{% url 'ShareNote' %}">Share note</a></li>
+                <li class="hover:cursor-pointer hover:underline"><a href="{% url 'sharewithme' %}">Shared with me</a></li>
+                <li class="hover:cursor-pointer hover:underline bg-red-100 hover:bg-rhover:cursor-pointer hover:underlineed-300 rounded-xl px-2 py-1"><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
                 <li class="hover:cursor-pointer hover:underline"><a href="{% url 'login' %}">Login</a></li>
                 <li class="hover:cursor-pointer hover:underline"><a href="{% url 'registration' %}">Registration</a></li>

@@ -91,3 +91,11 @@ def LoginView(request):
 def Logout(request):
     logout(request)
     return redirect('login')
+
+#POSTGres database
+
+def ShareNote(request):
+    return render(request, 'ShareNote.html')
+
+def ShareWithMe(request):
+    return render(request, 'ShareWithMe.html')

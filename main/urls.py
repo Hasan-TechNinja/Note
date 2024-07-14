@@ -14,4 +14,6 @@ urlpatterns = [
     path('login/', views.LoginView, name='login'),
     path('accounts/login/', views.LoginView, name='login'),
     path('logout/', views.Logout, name="logout"),
+    path('shareNote/', views.ShareNote, name="ShareNote"),
+    path('sharewithme', views.ShareWithMe, name="sharewithme")
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
