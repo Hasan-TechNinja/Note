@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             {% for note in notes %}
-            <tr>
+            <tr> 
                 <td class="border-2 px-4 py-2">{{ forloop.counter }}</td>
                 <td class="border-2 px-4 py-2">{{ note.title }}</td>
                 <td class="border-2 px-4 py-2">{{ note.content|striptags|truncatechars:100 }}</td>
